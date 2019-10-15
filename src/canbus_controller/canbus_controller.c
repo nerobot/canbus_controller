@@ -1,6 +1,6 @@
 #include "canbus_controller.h"
 
-static uint16_t device_id = 0;
+static uint16_t device_id = 0xFFFF;
 
 bool canbus_controller_init(uint16_t id)
 {

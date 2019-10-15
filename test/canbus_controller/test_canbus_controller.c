@@ -2,8 +2,9 @@
 // canbus controller test list
 //
 //  # Init
-//  * ID is stored correctly
-//  * if id is all good, then return true
+//  ## ID
+//  * ID is stored correctly                        - 
+//  * if id is all good, then return true           - 
 //  * if id is out of bounds, then return false
   
 #include "unity.h"
@@ -14,6 +15,7 @@ static uint16_t device_id = 1;
 
 void setUp(void)
 {
+    canbus_controller_init(device_id);
 }
 
 void tearDown(void)
@@ -21,11 +23,13 @@ void tearDown(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Init
+// # Init
 //
+
 void test_init_valid_id_return_true(void)
 {
-    bool success = canbus_controller_init(device_id);
+    bool success = false;
+    success = canbus_controller_init(device_id);
     TEST_ASSERT(success);
 }
 
@@ -41,4 +45,5 @@ void test_init_get_device_id_correct(void)
     uint16_t tmp_id = canbus_controller_get_device_id();
     TEST_ASSERT_EQUAL(device_id, tmp_id);
 }
+
 
