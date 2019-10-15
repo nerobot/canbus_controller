@@ -3,9 +3,9 @@
 //
 //  # Init
 //  ## ID
-//  * ID is stored correctly                        - 
-//  * if id is all good, then return true           - 
-//  * if id is out of bounds, then return false
+//  * ID is stored correctly                        - Done
+//  * if id is all good, then return true           - Done
+//  * if id is out of bounds, then return false     - Done
   
 #include "unity.h"
 #include "canbus_controller.h"
@@ -24,6 +24,10 @@ void tearDown(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 // # Init
+//
+
+///////////////////////////////////////////////////////////////////////////////
+// ## Device ID
 //
 
 void test_init_valid_id_return_true(void)
