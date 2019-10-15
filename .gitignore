@@ -1,0 +1,13 @@
+build/test/*
+build/artifacts/*
+.vscode/*
+src/.*
+src/*~
+test/.*
+test/*~
+..gitignore.un~
+*~
+*.swp
+tags
+vendor/*
+
