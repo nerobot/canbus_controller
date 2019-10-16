@@ -23,6 +23,18 @@
 //  * sending to a device that isn't on the device 
 //  list will cause a failure                       - done  
 //  * if send_buffer returns false, return false    - done
+//  
+//  # Receiving data
+//  ## Checking if data is available to read. 
+//  * to check if there is data, has_receive_data 
+//  will call mcp mcp2515_rx0_is_full               - done
+//  * if rx0 buf has any data, then has_receive_data
+//  will return true                                - done
+//  * if rx0 buf is emtpy, then has_receive_data
+//  will return false                               - done
+//
+// ## Reading data from buffers
+// * 
   
 #include "unity.h"
 #include "canbus_controller.h"
@@ -180,4 +192,32 @@ void test_send_switch_off_when_send_device_is_not_on_list_return_false(void)
 //    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, false);
     bool success = canbus_controller_send_switch_off(id_num_types);
     TEST_ASSERT_FALSE(success);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// # Receiving data
+//
+
+///////////////////////////////////////////////////////////////////////////////
+// ## Checking if data is available to read
+//
+
+void test_has_receive_data_will_call_mcp_rx0_is_full(void)
+{
+    mcp2515_rx0_is_full_ExpectAndReturn(true);
+    canbus_controller_has_receive_data();
+}
+
+void test_when_there_is_data_in_rx0_buf__return_true(void)
+{
+    mcp2515_rx0_is_full_ExpectAndReturn(true);
+    bool success = canbus_controller_has_receive_data();
+    TEST_ASSERT(success); 
+}
+
+void test_when_there_is_no_data_in_rx0_buf__return_false(void)
+{
+    mcp2515_rx0_is_full_ExpectAndReturn(false);
+    bool success = canbus_controller_has_receive_data();
+    TEST_ASSERT_FALSE(success); 
 }

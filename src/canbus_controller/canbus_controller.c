@@ -54,3 +54,10 @@ bool canbus_controller_send_switch_off(id_t id)
     bool success = mcp2515_driver_send_msg_buffer(device_id, 0, 6, message);
     return success;
 }
+
+
+bool canbus_controller_has_receive_data()
+{
+    bool rx0_has_data = mcp2515_rx0_is_full();
+    return rx0_has_data;
+}
