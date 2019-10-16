@@ -87,4 +87,5 @@
   :enabled:
     - module_generator
     - stdout_ide_tests_report
+    - warnings_report  
 ...

@@ -32,3 +32,25 @@ baudrate_t canbus_controller_get_baudrate(void)
 {
     return device_baudrate;
 }
+
+bool canbus_controller_send_switch_on(id_t id)
+{
+    if (id >= id_num_types)
+    {
+        return false;
+    }
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 1};
+    bool success = mcp2515_driver_send_msg_buffer(device_id, 0, 6, message);
+    return success;
+}
+
+bool canbus_controller_send_switch_off(id_t id)
+{    
+    if (id >= id_num_types)
+    {
+        return false;
+    }
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 0};
+    bool success = mcp2515_driver_send_msg_buffer(device_id, 0, 6, message);
+    return success;
+}

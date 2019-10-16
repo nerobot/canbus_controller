@@ -15,6 +15,14 @@
 //  ## mcp init
 //  * return true when mcp_init is all ok           - done
 //  * return false when mcp_init fails              - done
+//
+//  # Sending commands over can
+//  ## Sending switch pin command
+//  * send_switch_on_command all ok                 - done
+//  * send_switch_off_command all ok                - done
+//  * sending to a device that isn't on the device 
+//  list will cause a failure                       - done  
+//  * if send_buffer returns false, return false    - done
   
 #include "unity.h"
 #include "canbus_controller.h"
@@ -100,5 +108,76 @@ void test_init_will_return_false_if_mcp_init_fails(void)
     mcp2515_init_ExpectAndReturn(false);
 
     bool success = canbus_controller_init(device_id, baudrate);
-TEST_ASSERT_FALSE(success);
+    TEST_ASSERT_FALSE(success);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// # Send commands
+// 
+ 
+///////////////////////////////////////////////////////////////////////////////
+// ## Sending switch on commands
+//
+
+void test_send_switch_on_all_ok(void)
+{
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 1};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, true);
+    canbus_controller_send_switch_on(id_boiler_switch);
+}
+
+
+void test_send_switch_off_all_ok(void)
+{
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 0};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, true);
+    canbus_controller_send_switch_off(id_boiler_switch);
+}
+
+void test_send_switch_on_return_true_if_all_ok(void)
+{
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 1};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, true);
+    bool success = canbus_controller_send_switch_on(id_boiler_switch);
+    TEST_ASSERT(success);
+}
+
+void test_send_switch_off_return_true_if_all_ok(void)
+{
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 0};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, true);
+    bool success = canbus_controller_send_switch_off(id_boiler_switch);
+    TEST_ASSERT(success);
+}
+
+void test_send_switch_on_return_false_if_message_not_send_correctly(void)
+{
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 1};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, false);
+    bool success = canbus_controller_send_switch_on(id_boiler_switch);
+    TEST_ASSERT_FALSE(success);
+}
+
+void test_send_switch_off_return_false_if_message_not_send_correctly(void)
+{
+    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 0};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, false);
+    bool success = canbus_controller_send_switch_off(id_boiler_switch);
+    TEST_ASSERT_FALSE(success);
+}
+
+void test_send_switch_on_when_send_device_is_not_on_list_return_false(void)
+{
+//    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 0};
+//    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, false);
+    bool success = canbus_controller_send_switch_on(id_num_types);
+    TEST_ASSERT_FALSE(success);
+}
+
+void test_send_switch_off_when_send_device_is_not_on_list_return_false(void)
+{
+//    uint8_t message[] = {0, 0, (id_boiler_switch & 0x00FF), (id_boiler_switch >> 8), 0, 0};
+//    mcp2515_driver_send_msg_buffer_ExpectAndReturn(device_id, 0, 6, message, false);
+    bool success = canbus_controller_send_switch_off(id_num_types);
+    TEST_ASSERT_FALSE(success);
 }

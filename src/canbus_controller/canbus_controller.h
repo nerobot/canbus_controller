@@ -13,9 +13,21 @@ typedef enum
     br_num_types,
 } baudrate_t;
 
+typedef enum
+{
+    id_server,
+    id_boiler_switch,
+    id_num_types,
+} id_t;
+
 bool canbus_controller_init(uint16_t id, baudrate_t br);
 
 uint16_t canbus_controller_get_device_id(void);
+
 baudrate_t canbus_controller_get_baudrate(void);
+
+bool canbus_controller_send_switch_on(id_t id);
+
+bool canbus_controller_send_switch_off(id_t id);
 
 #endif // _CANBUS_CONTROLLER_H
