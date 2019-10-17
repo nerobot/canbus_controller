@@ -31,4 +31,12 @@ bool canbus_controller_send_switch_on(id_t id);
 bool canbus_controller_send_switch_off(id_t id);
 
 bool canbus_controller_has_receive_data();
+
+bool canbus_controller_read_buf(void);
+
+uint16_t canbus_controller_get_buf_from_id(void);
+
+uint8_t canbus_controller_get_receive_msg_len(void);
+
+void canbus_controller_get_receive_msg(uint8_t* receive_msg);
 #endif // _CANBUS_CONTROLLER_H

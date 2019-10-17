@@ -1,5 +1,4 @@
 syntax on
-colorscheme slate
 
 set tabstop=4 
 set shiftwidth=4 
@@ -13,6 +12,12 @@ augroup project
     autocmd!   
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen 
 augroup END
+
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_include_dirs = ['vendor/ceedling/vendor/unity/src/', 'src/canbus_controller/', 'src/mcp2515_driver/', 'build/test/mocks/']
+let g:syntastic_auto_loc_list=1
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
 
 set makeprg=ceedling
 

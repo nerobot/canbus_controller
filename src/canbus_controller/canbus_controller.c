@@ -2,6 +2,10 @@
 
 static uint16_t device_id = 0xFFFF;
 static baudrate_t device_baudrate = br_num_types;
+static uint16_t receive_id = 0x0000;
+static uint8_t receive_msg_len = 0x00;
+static uint8_t receive_msg[8];
+static uint16_t msg_from_id = 0;
 
 bool canbus_controller_init(uint16_t id, baudrate_t br)
 {
@@ -60,4 +64,34 @@ bool canbus_controller_has_receive_data()
 {
     bool rx0_has_data = mcp2515_rx0_is_full();
     return rx0_has_data;
+}
+
+bool canbus_controller_read_buf(void)
+{
+    uint8_t tmp_msg[8];
+    mcp2515_driver_read_can_message(&receive_id, &receive_msg_len, tmp_msg); 
+    uint8_t i = 0;
+    for (i = 0; i < receive_msg_len; i++)
+    {
+        receive_msg[i] = tmp_msg[i];
+    }
+}
+
+uint16_t canbus_controller_get_buf_from_id(void)
+{
+    return receive_id;
+}
+
+uint8_t canbus_controller_get_receive_msg_len(void)
+{
+    return receive_msg_len;
+}
+
+void canbus_controller_get_receive_msg(uint8_t* p_receive_msg)
+{
+    uint8_t i = 0;
+    for(i = 0; i < receive_msg_len; i++)
+    {
+        p_receive_msg[i] = receive_msg[i];
+    }
 }
