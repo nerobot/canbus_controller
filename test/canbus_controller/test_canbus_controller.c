@@ -42,6 +42,7 @@
 //  get_can_msg_id, and get_can_msg_len             - done
 //  * if data has been read correctly, return true
 //  * if data has not been read, return false
+//  * read will clear rx0if after reading       
 
 #include "unity.h"
 #include "canbus_controller.h"
@@ -255,6 +256,7 @@ void test_read_buf__will_call__mcp_read_message(void)
     uint8_t tmp_receive_msg[] = {0, 0, 0, 0, 0, 0};
 
     mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_IgnoreAndReturn(true); 
     canbus_controller_read_buf();
 }
 
@@ -268,6 +270,7 @@ void test_read_buf__will_store_id__read_id__will_return_value(void)
     uint8_t tmp_receive_msg[] = {0, 0, 0, 0, 0, 0};
 
     mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_IgnoreAndReturn(true); 
     canbus_controller_read_buf();
 
     tmp_id = canbus_controller_get_buf_from_id();
@@ -284,6 +287,7 @@ void test_read_buf_will_store_msg_len__get_receive_msg_len__will_return_it(void)
     uint8_t tmp_receive_msg[] = {0, 0, 0, 0, 0, 0};
 
     mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_IgnoreAndReturn(true); 
     canbus_controller_read_buf();
 
     tmp_len = canbus_controller_get_receive_msg_len();
@@ -291,6 +295,7 @@ void test_read_buf_will_store_msg_len__get_receive_msg_len__will_return_it(void)
 } 
 
 void test_read_buf_will_store_msg__get_receive_msg__will_return_it(void)
+
 {
     uint16_t from_id = 0x0010;
     uint8_t len = 6;
@@ -300,8 +305,23 @@ void test_read_buf_will_store_msg__get_receive_msg__will_return_it(void)
     uint8_t tmp_receive_msg[] = {0, 0, 0, 0, 0, 0};
 
     mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_IgnoreAndReturn(true); 
     canbus_controller_read_buf();
 
     canbus_controller_get_receive_msg(tmp_receive_msg);
     TEST_ASSERT_EQUAL_UINT8_ARRAY(receive_msg, tmp_receive_msg, len);
+}
+
+void test_read_buf_will_clear_rx0if_after_reading_message(void)
+{
+    uint16_t from_id = 0x0010;
+    uint8_t len = 6;
+    uint8_t receive_msg[] = {00, 00, 00, 01, 01, 01};
+    uint16_t tmp_id = 0x0000;
+    uint8_t tmp_len = 0;
+    uint8_t tmp_receive_msg[] = {0, 0, 0, 0, 0, 0};
+
+    mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_ExpectAndReturn(true);
+    canbus_controller_read_buf();
 }

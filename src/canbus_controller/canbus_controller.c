@@ -75,6 +75,7 @@ bool canbus_controller_read_buf(void)
     {
         receive_msg[i] = tmp_msg[i];
     }
+    mcp2515_driver_clear_rx0if();
 }
 
 uint16_t canbus_controller_get_buf_from_id(void)
