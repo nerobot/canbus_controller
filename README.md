@@ -1,5 +1,13 @@
 # canbus_controller
 
+## Notes
+
+A high level module for use with the lower level mcp2515_driver module. 
+
+This module will control the creation of correct messages for transmission as well as decoding messages to obtain the correct commands.
+
+The device IDs along with the command codes are stored in the header file. This will probably be moved to its own header file so that it can be saved in a similar way to a LIN LDF file. This will also allow the device ids to be project specific.
+
 ## Device ID
 
 0   home server
