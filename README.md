@@ -10,6 +10,7 @@ The device IDs along with the command codes are stored in the header file. This 
 
 ## Device ID
 
+-1  no id
 0   home server
 1   boiler switch
 
@@ -22,7 +23,8 @@ Byte
 
 ## Commands
 
-0000    switch pin
+-1          no command (used as default, incase nothing has been specified)
+0           switch pin
             2-3     switch device id
             4       pin to switch
             5       on / off (1 = on, 0 = off)
@@ -47,3 +49,10 @@ Byte
     * INT is setup in init, but it currently only works with rx0bf
     * Only rx0 is currently setup for use. rx1 will be implemented in future versions
     
+### v0.2
+
+#### 18th October 2019
+
+* read_buff will decode the message, storing the msg command and the msg parameters in interal variables
+* The above can be called via the appropraite get functions
+

@@ -43,6 +43,11 @@
 //  * if data has been read correctly, return true
 //  * if data has not been read, return false
 //  * read will clear rx0if after reading       
+//
+//  * read_buf will store the command internally
+//  * the above can be read with get_receive_command
+//  * read_buf will store the msg parameters internally
+//  * the above can be read with get_receive_parameters
 
 #include "unity.h"
 #include "canbus_controller.h"
@@ -324,4 +329,45 @@ void test_read_buf_will_clear_rx0if_after_reading_message(void)
     mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
     mcp2515_driver_clear_rx0if_ExpectAndReturn(true);
     canbus_controller_read_buf();
+}
+
+//  * read_buf will store the command internally
+//  * the above can be read with get_receive_command
+//  * read_buf will store the msg parameters internally
+//  * the above can be read with get_receive_parameters
+void test_read_buf_will_store_msg_command_and_get_receive_command_will_give_it(void)
+{
+    uint16_t from_id = 0x0010;
+    uint8_t len = 6;
+    command_t expect_command = command_no_command;
+    uint8_t receive_msg[] = {expect_command & 0xff, expect_command >> 8, 
+        00, 01, 01, 01};
+    command_t command = 0xFFFF;
+
+    mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_ExpectAndReturn(true);
+    canbus_controller_read_buf();
+
+    command = canbus_controller_get_receive_command();
+    TEST_ASSERT_EQUAL_INT16(command_no_command, command);
+}
+
+void test_read_buf_will_store_msg_pamameters_and_get_receive_parameters_will_give_it(void)
+{
+    uint16_t from_id = 0x0010;
+    uint8_t len = 6;
+    command_t expect_command = command_no_command;
+    uint8_t expected_param[4] = {00, 01, 01, 01};
+    uint8_t receive_msg[] = {expect_command & 0xff, expect_command >> 8, 
+       expected_param[0], expected_param[1], expected_param[2], expected_param[3]};
+    command_t command = 0xFFFF;
+    uint8_t receive_param[4] = {0, 0, 0, 0};
+
+    mcp2515_driver_read_can_message_expect(&from_id, &len, receive_msg);
+    mcp2515_driver_clear_rx0if_ExpectAndReturn(true);
+    canbus_controller_read_buf();
+
+    canbus_controller_get_receive_params(receive_param);
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_param, receive_param, 4);
+     
 }

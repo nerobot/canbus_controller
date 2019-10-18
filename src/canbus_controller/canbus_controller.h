@@ -20,6 +20,13 @@ typedef enum
     id_num_types,
 } id_t;
 
+typedef enum
+{
+    command_switch_pin,
+    command_no_command,
+    command_num_types,
+} command_t;
+
 bool canbus_controller_init(uint16_t id, baudrate_t br);
 
 uint16_t canbus_controller_get_device_id(void);
@@ -39,4 +46,10 @@ uint16_t canbus_controller_get_buf_from_id(void);
 uint8_t canbus_controller_get_receive_msg_len(void);
 
 void canbus_controller_get_receive_msg(uint8_t* receive_msg);
+
+command_t canbus_controller_get_receive_command(void);
+
+void canbus_controller_get_receive_params(uint8_t* p_receive_param);
+
 #endif // _CANBUS_CONTROLLER_H
+
