@@ -1,31 +1,29 @@
+/**
+ * @file    canbus_controller.h
+ * @author  Steven Daglish
+ * @version 0.2
+ * @date    October 2019
+ *
+ * @note    The correct "cdf" file will need to be included below. This will
+ *          contain the device IDs and command codes.
+ */ 
+
 #ifndef _CANBUS_CONTROLLER_H
 #define _CANBUS_CONTROLLER_H
 
 #include <stdbool.h>
 #include <stdint.h>
 #include "mcp2515_driver.h"
+#include "cdf.h"               
 
 #define MAX_ID      0x7FF
 
+// TODO Add all the possible baudrates below
 typedef enum 
 {
     br_5kbpm,
     br_num_types,
 } baudrate_t;
-
-typedef enum
-{
-    id_server,
-    id_boiler_switch,
-    id_num_types,
-} id_t;
-
-typedef enum
-{
-    command_switch_pin,
-    command_no_command,
-    command_num_types,
-} command_t;
 
 bool canbus_controller_init(uint16_t id, baudrate_t br);
 

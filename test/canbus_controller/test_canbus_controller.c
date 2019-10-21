@@ -52,6 +52,7 @@
 #include "unity.h"
 #include "canbus_controller.h"
 #include "mock_mcp2515_driver.h"
+#include "cdf.h"
 
 static uint16_t device_id = 1;
 static baudrate_t baudrate = br_5kbpm; 

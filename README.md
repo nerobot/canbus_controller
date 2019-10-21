@@ -56,3 +56,15 @@ Byte
 * read_buff will decode the message, storing the msg command and the msg parameters in interal variables
 * The above can be called via the appropraite get functions
 
+### v0.3
+
+#### 21st October 2019
+
+This branch is for testing the ability to have a separate header file that contains all the information about the nodes (devices) on the network as well as the commands that can be called and read.
+
+At the moment, all the device ids and command codes are stored in the canbus header file which makes separating different projects difficult.
+
+The file must be called cdf.h for this to work.
+
+* For each project, find and change the cdf.h file as neede for the project.
+
