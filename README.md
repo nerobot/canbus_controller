@@ -49,14 +49,14 @@ Byte
     * INT is setup in init, but it currently only works with rx0bf
     * Only rx0 is currently setup for use. rx1 will be implemented in future versions
     
-### v0.2
+### v0.2-decode_receive_command
 
 #### 18th October 2019
 
 * read_buff will decode the message, storing the msg command and the msg parameters in interal variables
 * The above can be called via the appropraite get functions
 
-### v0.3
+### v0.3-clf_header_file_test
 
 #### 21st October 2019
 

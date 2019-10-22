@@ -16,6 +16,8 @@
 #include "mcp2515_driver.h"
 #include "cdf.h"               
 
+// TODO Check that the below define can be removed. All ID values should be stored
+// in the cdf header file.
 #define MAX_ID      0x7FF
 
 // TODO Add all the possible baudrates below
@@ -25,10 +27,22 @@ typedef enum
     br_num_types,
 } baudrate_t;
 
+/**
+ * Initalises both the canbus_controller and the mcp2515_driver modules.
+ * @warning Init assumes that the SPI driver has already been set up.
+ * @warning The init function does not yet use the baudrate. It is stored, but
+ *          nothing is done with it.
+ * TODO     Add functionality that checks and uses the baudrate that is sent via
+ *          this init
+ */ 
 bool canbus_controller_init(uint16_t id, baudrate_t br);
 
 uint16_t canbus_controller_get_device_id(void);
 
+/**
+ * @warning Function will return the baudrate provided in the init function, 
+ *          which isn't currently used by the mcp2515 module.
+ */
 baudrate_t canbus_controller_get_baudrate(void);
 
 bool canbus_controller_send_switch_on(id_t id);
@@ -37,6 +51,10 @@ bool canbus_controller_send_switch_off(id_t id);
 
 bool canbus_controller_has_receive_data();
 
+/**
+ * Calls the mcp2515 to read the data from rx0.
+ * @note    Only rx0 is currently set up to be used. Rx1 will be set up soon.
+ */ 
 bool canbus_controller_read_buf(void);
 
 uint16_t canbus_controller_get_buf_from_id(void);
