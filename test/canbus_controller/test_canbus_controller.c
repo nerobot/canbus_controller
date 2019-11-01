@@ -54,7 +54,7 @@
 #include "mock_mcp2515_driver.h"
 #include "cdf.h"
 
-static uint16_t device_id = 1;
+static id_t device_id = id_server;
 static baudrate_t baudrate = br_5kbpm; 
 
 static void mcp2515_driver_read_can_message_expect(uint16_t* id, uint8_t* len, uint8_t* message)
@@ -71,7 +71,7 @@ static void mcp2515_driver_read_can_message_expect(uint16_t* id, uint8_t* len, u
 
 void setUp(void)
 {
-    mcp2515_init_IgnoreAndReturn(true);
+    mcp2515_init_ExpectAndReturn(true);
     canbus_controller_init(device_id, baudrate);
 }
 
@@ -90,6 +90,7 @@ void tearDown(void)
 void test_init_valid_id_return_true(void)
 {
     bool success = false;
+    mcp2515_init_ExpectAndReturn(true);
     success = canbus_controller_init(device_id, baudrate);
     TEST_ASSERT(success);
 }
@@ -102,6 +103,7 @@ void test_init_id_out_of_bounds(void)
 
 void test_init_get_device_id_correct(void)
 {
+    mcp2515_init_ExpectAndReturn(true);
     canbus_controller_init(device_id, baudrate);
     uint16_t tmp_id = canbus_controller_get_device_id();
     TEST_ASSERT_EQUAL(device_id, tmp_id);
@@ -113,6 +115,7 @@ void test_init_get_device_id_correct(void)
 
 void test_init_baudrate_correct(void)
 {
+    mcp2515_init_ExpectAndReturn(true);
     bool success = canbus_controller_init(device_id, baudrate);
     TEST_ASSERT(success);
 }
@@ -125,6 +128,7 @@ void test_init_baudrate_out_of_bounds_returns_false(void)
 
 void test_init_baudrate_get_baudrate_returns_correctly(void)
 {
+    mcp2515_init_ExpectAndReturn(true);
     bool success = canbus_controller_init(device_id, baudrate);
     baudrate_t tmp_br = canbus_controller_get_baudrate();
     TEST_ASSERT_EQUAL(baudrate, tmp_br);
