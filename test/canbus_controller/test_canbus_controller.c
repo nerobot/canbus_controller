@@ -71,7 +71,7 @@ static void mcp2515_driver_read_can_message_expect(uint16_t* id, uint8_t* len, u
 
 void setUp(void)
 {
-    mcp2515_init_ExpectAndReturn(true);
+    mcp2515_init_ExpectAndReturn(baudrate, true);
     canbus_controller_init(device_id, baudrate);
 }
 
@@ -90,7 +90,7 @@ void tearDown(void)
 void test_init_valid_id_return_true(void)
 {
     bool success = false;
-    mcp2515_init_ExpectAndReturn(true);
+    mcp2515_init_ExpectAndReturn(baudrate, true);
     success = canbus_controller_init(device_id, baudrate);
     TEST_ASSERT(success);
 }
@@ -103,7 +103,7 @@ void test_init_id_out_of_bounds(void)
 
 void test_init_get_device_id_correct(void)
 {
-    mcp2515_init_ExpectAndReturn(true);
+    mcp2515_init_ExpectAndReturn(baudrate, true);
     canbus_controller_init(device_id, baudrate);
     uint16_t tmp_id = canbus_controller_get_device_id();
     TEST_ASSERT_EQUAL(device_id, tmp_id);
@@ -115,7 +115,7 @@ void test_init_get_device_id_correct(void)
 
 void test_init_baudrate_correct(void)
 {
-    mcp2515_init_ExpectAndReturn(true);
+    mcp2515_init_ExpectAndReturn(baudrate, true);
     bool success = canbus_controller_init(device_id, baudrate);
     TEST_ASSERT(success);
 }
@@ -128,7 +128,7 @@ void test_init_baudrate_out_of_bounds_returns_false(void)
 
 void test_init_baudrate_get_baudrate_returns_correctly(void)
 {
-    mcp2515_init_ExpectAndReturn(true);
+    mcp2515_init_ExpectAndReturn(baudrate, true);
     bool success = canbus_controller_init(device_id, baudrate);
     baudrate_t tmp_br = canbus_controller_get_baudrate();
     TEST_ASSERT_EQUAL(baudrate, tmp_br);
@@ -140,14 +140,14 @@ void test_init_baudrate_get_baudrate_returns_correctly(void)
 
 void test_init_will_call_mcp_init(void)
 {
-    mcp2515_init_ExpectAndReturn(true);
+    mcp2515_init_ExpectAndReturn(baudrate, true);
     
     canbus_controller_init(device_id, baudrate);
 }
 
 void test_init_will_return_false_if_mcp_init_fails(void)
 {
-    mcp2515_init_ExpectAndReturn(false);
+    mcp2515_init_ExpectAndReturn(baudrate, false);
 
     bool success = canbus_controller_init(device_id, baudrate);
     TEST_ASSERT_FALSE(success);
