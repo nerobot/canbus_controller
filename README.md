@@ -78,4 +78,5 @@ To be implemented
 * mcp2515_driver branch "v0.1b-allowing_baudrate_changes_in_init" has been updated to have a baudrate parameter that is used to set the baudrate at setup.
 * canbus_controller will now send its init baudrate value to the mcp init function, allowing the baudrate to be set during init.
     * Functionality added and unit tested.
+* baudrate_t values brought in line with the values from mpc2515_driver module.
 

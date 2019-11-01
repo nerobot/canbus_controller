@@ -23,7 +23,8 @@
 // TODO Add all the possible baudrates below
 typedef enum 
 {
-    br_5kbpm,
+    br_5kbpm = 1,
+    br_1000kbpm = 18,
     br_num_types,
 } baudrate_t;
 
