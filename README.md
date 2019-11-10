@@ -70,13 +70,14 @@ The file must be called cdf.h for this to work.
 
 ### v0.4-change_baudrate_during_init
 
-##### 1st November 2019
-
-To be implemented
------------------
+#### 1st November 2019
 
 * mcp2515_driver branch "v0.1b-allowing_baudrate_changes_in_init" has been updated to have a baudrate parameter that is used to set the baudrate at setup.
 * canbus_controller will now send its init baudrate value to the mcp init function, allowing the baudrate to be set during init.
     * Functionality added and unit tested.
 * baudrate_t values brought in line with the values from mpc2515_driver module.
+
+#### Breaking changes
+
+* canbus_controller will now require a version of mcp2515_driver from v0.1b that contains a version of init that will take a parameter for the baudrate. Make will fail on older versions.
 

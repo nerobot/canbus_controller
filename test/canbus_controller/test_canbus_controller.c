@@ -374,5 +374,4 @@ void test_read_buf_will_store_msg_pamameters_and_get_receive_parameters_will_giv
 
     canbus_controller_get_receive_params(receive_param);
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_param, receive_param, 4);
-     
 }
