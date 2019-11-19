@@ -10,9 +10,9 @@ The device IDs along with the command codes are stored in the header file. This 
 
 ## Device ID
 
--1  no id
-0   home server
-1   boiler switch
+home server
+boiler switch
+office temperature sensor
 
 ## Message structure
 
@@ -23,11 +23,14 @@ Byte
 
 ## Commands
 
--1          no command (used as default, incase nothing has been specified)
-0           switch pin
+no command (used as default, incase nothing has been specified)
+switch pin
             2-3     switch device id
             4       pin to switch
             5       on / off (1 = on, 0 = off)
+temperature reading 
+    2   msb
+    3   lsb
 
 ## History
 
@@ -80,4 +83,10 @@ The file must be called cdf.h for this to work.
 #### Breaking changes
 
 * canbus_controller will now require a version of mcp2515_driver from v0.1b that contains a version of init that will take a parameter for the baudrate. Make will fail on older versions.
+
+### v0.5-send_16bit-being_added
+
+#### 19th November 2019
+
+To be implemented
 

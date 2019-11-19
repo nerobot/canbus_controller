@@ -68,5 +68,6 @@ command_t canbus_controller_get_receive_command(void);
 
 void canbus_controller_get_receive_params(uint8_t* p_receive_param);
 
+bool canbus_controller_send_temperature(uint16_t temperature);
 #endif // _CANBUS_CONTROLLER_H
 

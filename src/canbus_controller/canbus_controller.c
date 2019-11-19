@@ -123,3 +123,11 @@ void canbus_controller_get_receive_params(uint8_t* p_receive_param)
 {
     copy_array(p_receive_param, receive_msg_param, 6);
 }
+
+bool canbus_controller_send_temperature(uint16_t temperature)
+{
+    uint8_t msg[] = {command_send_temperature & 0x00FF, command_send_temperature >> 8, 
+        temperature & 0x00FF, temperature >> 8};
+    return mcp2515_driver_send_msg_buffer(device_id, 0, 4, msg);
+}
+

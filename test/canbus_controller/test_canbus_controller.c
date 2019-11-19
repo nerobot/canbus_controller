@@ -375,3 +375,44 @@ void test_read_buf_will_store_msg_pamameters_and_get_receive_parameters_will_giv
     canbus_controller_get_receive_params(receive_param);
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_param, receive_param, 4);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//  # Transmitting data
+//
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  ## Transmitting the temperature
+//
+
+void test_transmitting_temperature_all_ok(void)
+{
+    mcp2515_init_ExpectAndReturn(baudrate, true);
+    device_id = id_office_temp_sensor; 
+    canbus_controller_init(device_id, baudrate);
+
+    uint16_t temperature = 0x1234;
+    command_t tx_command = command_send_temperature;
+    id_t send_id = id_office_temp_sensor;
+    uint8_t msg[] = {tx_command & 0x00FF, tx_command >> 8, temperature & 0x00FF, temperature >> 8};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(send_id, 0, 4, msg, true);
+
+    bool success = canbus_controller_send_temperature(temperature); 
+    TEST_ASSERT(success);
+}
+
+void test_transmitting_temperature_all_ok_2(void)
+{
+    mcp2515_init_ExpectAndReturn(baudrate, true);
+    device_id = id_office_temp_sensor; 
+    canbus_controller_init(device_id, baudrate);
+
+    uint16_t temperature = 0x9999;
+    command_t tx_command = command_send_temperature;
+    id_t send_id = id_office_temp_sensor;
+    uint8_t msg[] = {tx_command & 0x00FF, tx_command >> 8, temperature & 0x00FF, temperature >> 8};
+    mcp2515_driver_send_msg_buffer_ExpectAndReturn(send_id, 0, 4, msg, true);
+
+    bool success = canbus_controller_send_temperature(temperature); 
+    TEST_ASSERT(success);
+}

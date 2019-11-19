@@ -21,9 +21,10 @@
  */
 typedef enum
 {
-    id_server,          ///< "Master" controller. Sends all data to / from the server via serial
-    id_boiler_switch,   ///< Boiler switch. Will switch the boiler on / off as needed. exposes the unused io pins which could be put to use
-    id_num_types,       ///< Must be kept at the end. Used to check if a given id is defined correctly
+    id_server,              ///< "Master" controller. Sends all data to / from the server via serial
+    id_boiler_switch,       ///< Boiler switch. Will switch the boiler on / off as needed. exposes the unused io pins which could be put to use
+    id_office_temp_sensor,  ///< Office temperature senser. Will send the 16bit data corresponding with the temperature. Signal sent will be the un-decoded TA value  
+    id_num_types,           ///< Must be kept at the end. Used to check if a given id is defined correctly
 } id_t;
 
 /**
@@ -32,9 +33,10 @@ typedef enum
  */   
 typedef enum
 {
-    command_no_command, ///< The default command. If this command is sent, then it means a command wasn't setup correctly
-    command_switch_pin, ///< Switches a pin on / off
-    command_num_types,  ///< Must be kept at the end. Used to check if a given id is defined correctly
+    command_no_command,         ///< The default command. If this command is sent, then it means a command wasn't setup correctly
+    command_switch_pin,         ///< Switches a pin on / off
+    command_send_temperature,   ///< Will send the 16bit temperature value. Reciever to decode the data.
+    command_num_types,          ///< Must be kept at the end. Used to check if a given id is defined correctly
 } command_t;
 
 #endif
