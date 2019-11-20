@@ -68,6 +68,18 @@ command_t canbus_controller_get_receive_command(void);
 
 void canbus_controller_get_receive_params(uint8_t* p_receive_param);
 
+/**
+ * Sends a 16bit value as a temperature.
+ *
+ * The value will have no decoding done to it, so it will be necessary for the
+ * receiving node to do something with the value (or just leave it and pass it
+ * on as it is).
+ *
+ * @param 16bit value to be sent as the temperature
+ * @warning No checks are done on the value and it will be sent out as it is.
+ *
+ */
 bool canbus_controller_send_temperature(uint16_t temperature);
+
 #endif // _CANBUS_CONTROLLER_H
 
