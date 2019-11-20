@@ -88,5 +88,6 @@ The file must be called cdf.h for this to work.
 
 #### 19th November 2019
 
-To be implemented
+send_temperature now implemented. This will send a 16bit temperature reading over the bus. The temperature will need to be provided as parameter, otherwise it will not know what temperature needs to be sent.
 
+This way, it will be possible for several different temperatures to be sent from the same node.
